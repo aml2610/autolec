@@ -31,4 +31,7 @@ CUCULET
 CUCULET
 CUCULET
 CUCULET
+<<<<<<< HEAD
 CUCULET
+=======
+>>>>>>> blinda
