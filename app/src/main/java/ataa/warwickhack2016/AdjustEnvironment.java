@@ -32,9 +32,12 @@ public class AdjustEnvironment {
      */
     public void begin(){
         System.out.println("App started. Setting start environment.");
-        wifiOn();
-        soundOff();
-        lowBrightness();
+        if(MainActivity.adjustWiFi)
+            wifiOn();
+        if(MainActivity.adjustSound)
+            soundOff();
+        if(MainActivity.adjustBrightness)
+            lowBrightness();
     }
 
     /**
@@ -42,9 +45,12 @@ public class AdjustEnvironment {
      */
     public void end(){
         System.out.println("Setting end environment.");
-        wifiOff();
-        soundOn();
-        highBrightness();
+        if(MainActivity.adjustWiFi)
+            wifiOff();
+        if(MainActivity.adjustSound)
+            soundOn();
+        if(MainActivity.adjustBrightness)
+            highBrightness();
 
     }
 

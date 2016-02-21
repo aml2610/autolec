@@ -26,7 +26,6 @@ public class ConfigActivity extends AppCompatActivity {
         sound = (CheckBox)findViewById(R.id.checkBox2);
         bright = (CheckBox)findViewById(R.id.checkBox3);
 
-       // Toast.makeText(this, "" + MainActivity.studentID, Toast.LENGTH_SHORT).show();
         studentID.setText("" + MainActivity.studentID);
         wifi.setChecked(MainActivity.adjustWiFi);
         sound.setChecked(MainActivity.adjustSound);
@@ -38,5 +37,13 @@ public class ConfigActivity extends AppCompatActivity {
         MainActivity.saveSettings(Integer.parseInt(studentID.getText().toString()), wifi.isChecked(), sound.isChecked(), bright.isChecked());
     }
 
+    public void restoreClick(View view)
+    {
+        MainActivity.saveSettings(0,true,true,true);
+        studentID.setText("0");
+        wifi.setChecked(true);
+        sound.setChecked(true);
+        bright.setChecked(true);
+    }
 
 }
