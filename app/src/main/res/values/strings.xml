@@ -1,4 +1,7 @@
 <resources>
-    <string name="app_name">WarwickHack2016</string>
+    <string name="app_name">AutoLec</string>
     <string name="title_activity_config">AutoLec</string>
+    <string name="server_url">jdbc:mysql://db-uni.cntvjeyihz8y.us-west-2.rds.amazonaws.com/db_uni</string>
+    <string name="username">ataa_admin</string>
+    <string name="password">ampulamare123</string>
 </resources>

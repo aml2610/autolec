@@ -5,16 +5,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import ataa.warwickhack2016.R;
-
+/**
+ * Activity in which the app settings are displayed
+ */
 public class ConfigActivity extends AppCompatActivity {
 
-    EditText studentID;
-    CheckBox wifi;
-    CheckBox sound;
-    CheckBox bright;
+    private EditText studentID;
+    private CheckBox wifi;
+    private CheckBox sound;
+    private CheckBox bright;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +32,19 @@ public class ConfigActivity extends AppCompatActivity {
         bright.setChecked(MainActivity.adjustBrightness);
     }
 
+    /**
+     * Method called automatically when the "save settings" button is pressed
+     * @param view The button
+     */
     public void saveClick(View view)
     {
         MainActivity.saveSettings(Integer.parseInt(studentID.getText().toString()), wifi.isChecked(), sound.isChecked(), bright.isChecked());
     }
 
+    /**
+     * Method called automatically when the "Restore settings" button is pressed
+     * @param view
+     */
     public void restoreClick(View view)
     {
         MainActivity.saveSettings(0,true,true,true);

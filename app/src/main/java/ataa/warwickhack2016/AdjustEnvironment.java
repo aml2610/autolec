@@ -7,11 +7,8 @@ import android.media.AudioManager;
 import android.net.wifi.WifiManager;
 import android.provider.Settings;
 
-import ataa.warwickhack2016.MainActivity;
-
-
 /**
- * Created by Andrei-Marius on 20/02/2016.
+ * A class that controls the phone settings
  */
 public class AdjustEnvironment {
     private WifiManager mainWifiObj;
@@ -80,7 +77,7 @@ public class AdjustEnvironment {
      * Turning the sound off
      */
     public void soundOff(){
-        mainAudioObj.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+        mainAudioObj.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
     }
 
     /**

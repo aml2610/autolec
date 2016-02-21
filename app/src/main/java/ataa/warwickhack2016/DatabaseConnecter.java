@@ -1,38 +1,33 @@
 package ataa.warwickhack2016;
 
 import android.app.Activity;
-import android.net.Uri;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
-import java.util.SimpleTimeZone;
 
-public class SqlActivity {
+/**
+ * The class that makes the connection between the app and the sql database.
+ */
+public class DatabaseConnecter {
 
-    Activity mainActivity;
-    Connection conn;
-    Statement sqlState;
-    AdjustEnvironment adjustEnvironment;
+    private Activity mainActivity;
+    private Connection conn;
+    private Statement sqlState;
+    private AdjustEnvironment adjustEnvironment;
 
-    public SqlActivity(Activity main) {
+    /**
+     * Initialises the connection
+     * @param main The main activity of the app
+     */
+    public DatabaseConnecter(Activity main) {
+
         mainActivity = main;
 
         // Constructing the class that manipulates the wifi, brightness, sound profile
@@ -40,8 +35,7 @@ public class SqlActivity {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-
-            conn = DriverManager.getConnection("jdbc:mysql://db-uni.cntvjeyihz8y.us-west-2.rds.amazonaws.com/db_uni", "ataa_admin", "ampulamare123");
+            conn = DriverManager.getConnection(main.getString(R.string.server_url), main.getString(R.string.username), main.getString(R.string.password));
             sqlState = conn.createStatement();
         }
         catch (ClassNotFoundException ex) {
@@ -52,11 +46,15 @@ public class SqlActivity {
         }
     }
 
-    public String getLecnotes(int moduleID) {
-
+    /**
+     * Returns a string representing the link to the lecture notes by sending a query to the database
+     * @param moduleID The ID of the module
+     * @return An http link
+     */
+    public String getLecnotes(int moduleID)
+    {
         try {
-            String select = "SELECT lecnotes FROM module WHERE id = '" + moduleID + "'"; // aici bagai ca sa nu primeasca decat de la ce vrem link
-            System.out.println(select);
+            String select = "SELECT lecnotes FROM module WHERE id = '" + moduleID + "'";
             ResultSet results = sqlState.executeQuery(select);
 
             if(results.next())
@@ -69,11 +67,15 @@ public class SqlActivity {
 
     }
 
+    /**
+     * Returns the name of the lecturer by sending an sql request
+     * @param moduleID The id of the module
+     * @return A string representing the name of the lecturer
+     */
     public String getLecturerName(int moduleID) {
 
         try {
             String select = "SELECT lecturer_name FROM module WHERE id = '" + moduleID + "'";
-            System.out.println(select);
             ResultSet results = sqlState.executeQuery(select);
 
             if(results.next())
@@ -86,11 +88,15 @@ public class SqlActivity {
         }
     }
 
+    /**
+     * Returns the link to the feedback survey from the end of the lecture
+     * @param moduleID The id of the module
+     * @return The http link
+     */
     public String getSurvey(int moduleID) {
 
         try {
             String select = "SELECT survey FROM module WHERE id = '" + moduleID + "'";
-            System.out.println(select);
             ResultSet results = sqlState.executeQuery(select);
 
             if(results.next())
@@ -103,11 +109,14 @@ public class SqlActivity {
         }
     }
 
+    /**
+     * Return the name of a module, given its ID
+     * @param moduleID The id of the module
+     * @return The name of the corresponding module
+     */
     public String getModuleName(int moduleID) {
-
         try {
             String select = "SELECT module_name FROM module WHERE id = '" + moduleID + "'";
-            System.out.println(select);
             ResultSet results = sqlState.executeQuery(select);
 
             if(results.next())
@@ -120,23 +129,24 @@ public class SqlActivity {
         }
     }
 
+    /**
+     * Return the id of the module currently scheduled to be given in the room
+     * @param roomID The id of the room
+     * @return The if of the current module
+     */
     public int getModule(int roomID)  {
         try {
-
             Date myDate = new Date();
             SimpleDateFormat sdf =  new SimpleDateFormat("HH:mm:ss");
             String time = sdf.format (myDate);
 
-            System.out.println(time);
 
             String select = "SELECT room" + roomID + ".moduleID FROM room" + roomID + ", module WHERE module.id = room" + roomID + ".moduleID " +
                     "AND room" + roomID + ".start_time <= '" + time + "' AND room" + roomID + ".end_time >= '" + time + "'";
 
-            System.out.println(select);
             ResultSet results = sqlState.executeQuery(select);
 
             if(results.next()) {
-
                 return results.getInt("moduleID");
             }
             return 0;
@@ -148,11 +158,14 @@ public class SqlActivity {
 
     }
 
+    /**
+     * Return whether the last action of the module was going in the room or outside of it
+     * @param studentID
+     * @return Either "in" or "out"
+     */
     public String getPurpose(int studentID) {
-
         try {
             String select = "SELECT purpose FROM student WHERE id = '" + studentID + "'";
-            System.out.println(select);
             ResultSet results = sqlState.executeQuery(select);
 
             if(results.next())
@@ -165,27 +178,32 @@ public class SqlActivity {
         }
     }
 
+    /**
+     * Sends the current time to the "in" purpose of the database
+     * @param studentID The id of the student
+     * @param time The current time
+     */
     public void setTimeIn(int studentID, String time) {
-
         try {
             adjustEnvironment.begin();
-            // TODO - set time out to null
             String query = "UPDATE student SET time_in = '" + time + "', time_out = NULL WHERE id = " + studentID;
-            System.out.println(query);
             sqlState.executeUpdate(query);
         } catch(SQLException ex) {
 
             System.out.println("Something wrong: " + ex.getMessage());
         }
-
     }
 
+    /**
+     * Sends the current time to the "out" purpose of the database
+     * @param studentID The id of the student
+     * @param time The current time
+     */
     public void setTimeOut(int studentID, String time) {
 
         try {
             adjustEnvironment.end();
             String query = "UPDATE student SET time_out = '" + time + "' WHERE id = " + studentID;
-            System.out.println(query);
             sqlState.executeUpdate(query);
         } catch(SQLException ex) {
 
@@ -194,15 +212,17 @@ public class SqlActivity {
 
     }
 
+    /**
+     * Changes the database purpose from in to out or the other way around
+     * @param studentID The id of the student.
+     */
     public void setPurpose(int studentID) {
 
         try {
-
             Date myDate = new Date();
             SimpleDateFormat sdf =  new SimpleDateFormat("HH:mm:ss");
             String time = sdf.format(myDate);
 
-            System.out.println(time);
 
             String purpose = getPurpose(studentID);
 
@@ -216,13 +236,23 @@ public class SqlActivity {
                 String query = "UPDATE student SET purpose = 'in' WHERE id = " + studentID;
                 setTimeIn(studentID, time);
                 sqlState.executeUpdate(query);
+            } else
+            {
+                AlertDialog.Builder builder = new AlertDialog.Builder(mainActivity);
+                builder.setMessage("There is no student with such an ID!").setTitle("Alert!");
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button
+                        mainActivity.finish();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
 
         } catch (SQLException ex) {
             System.out.println("Something wrong: " + ex.getMessage());
-
         }
-
 
     }
 

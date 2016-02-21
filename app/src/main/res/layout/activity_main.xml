@@ -39,4 +39,20 @@
         android:layout_alignTop="@+id/imageView"
         android:layout_centerHorizontal="true" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Survey"
+        android:id="@+id/surveyButton"
+        android:onClick="showSurvey"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:textStyle="bold"
+        android:textSize="30dp" />
+
+
+
 </RelativeLayout>
