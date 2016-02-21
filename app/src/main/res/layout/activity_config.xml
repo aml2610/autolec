@@ -107,6 +107,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:paddingTop="20dp"
-        android:paddingBottom="20dp" />
+        android:paddingBottom="20dp"
+        android:onClick="restoreClick"
+        android:nestedScrollingEnabled="false" />
 
 </RelativeLayout>
