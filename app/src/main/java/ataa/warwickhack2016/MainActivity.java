@@ -1,7 +1,9 @@
 package ataa.warwickhack2016;
 
 import android.app.Notification;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
@@ -26,6 +28,27 @@ public class MainActivity extends AppCompatActivity {
     NfcAdapter mNfcAdapter;
     TextView textView;
     AdjustEnvironment adjustEnvironment;
+    public static int studentID;
+    public static boolean adjustWiFi;
+    public static boolean adjustSound;
+    public static boolean adjustBrightness;
+    SharedPreferences settings;
+    static SharedPreferences.Editor editor;
+
+    public static void saveSettings(int sstudentID, boolean aadjustWiFi, boolean aadjustSound, boolean aadjustBrightness)
+    {
+        adjustBrightness = aadjustBrightness;
+        adjustWiFi = aadjustWiFi;
+        adjustSound = aadjustSound;
+        studentID = sstudentID;
+
+        editor.putInt("studentID",studentID);
+        editor.putBoolean("adjustWiFi",adjustWiFi);
+        editor.putBoolean("adjustSound",adjustSound);
+        editor.putBoolean("adjustBrightness",adjustBrightness);
+
+        editor.commit();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,6 +57,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         TextView textView = (TextView) findViewById(R.id.tagText);
+
+        // Restore preferences
+        settings = getPreferences(Context.MODE_PRIVATE);
+        editor = settings.edit();
+        studentID = settings.getInt("studentID", 0);
+        adjustWiFi = settings.getBoolean("adjustWiFi", true);
+        adjustSound = settings.getBoolean("adjustSound", true);
+        adjustBrightness = settings.getBoolean("adjustBrightnes", true);
+
 
         // Constructing the class that manipulates the wifi, brightness, sound profile
         adjustEnvironment = new AdjustEnvironment(this);
@@ -79,7 +111,12 @@ public class MainActivity extends AppCompatActivity {
                     byte[] payload = records[0].getPayload();
 
                     // Get the Text Encoding
-                    String textEncoding = ((payload[0] & 128) == 0) ? "UTF-8 " : "UTF-16";
+                    String textEncoding;
+
+                    if  ((payload[0] & 128) == 0)
+                        textEncoding = "UTF-8";
+                    else
+                        textEncoding = "UTF-16";
 
                     // Get the Language Code
                     int languageCodeLength = payload[0] & 0063;
