@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
                         lecnoteButton.setEnabled(true);
 
                     surveyLink = sql.getSurvey(moduleID);
-                    if(link.equals("None"))
+                    if(surveyLink.equals("None"))
                         surveyButton.setText("No lecture notes available!");
                     else
                         surveyButton.setEnabled(true);

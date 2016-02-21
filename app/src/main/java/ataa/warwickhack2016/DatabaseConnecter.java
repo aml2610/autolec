@@ -39,7 +39,7 @@ public class DatabaseConnecter {
             sqlState = conn.createStatement();
         }
         catch (ClassNotFoundException ex) {
-             // won't happen
+            // won't happen
         }
         catch (SQLException ex) {
             System.out.println("Something wrong: " + ex.getMessage());
@@ -257,4 +257,3 @@ public class DatabaseConnecter {
     }
 
 }
-
