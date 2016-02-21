@@ -1,5 +1,6 @@
 package ataa.warwickhack2016;
 
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.media.AudioManager;
@@ -21,7 +22,7 @@ public class AdjustEnvironment {
      * Constructor
      * @param activity Our main activity
      */
-    public AdjustEnvironment(MainActivity activity) {
+    public AdjustEnvironment(Activity activity) {
         mainWifiObj = (WifiManager) activity.getSystemService(Context.WIFI_SERVICE);
         mainAudioObj = (AudioManager) activity.getSystemService(Context.AUDIO_SERVICE);
         cResolver = activity.getContentResolver();
