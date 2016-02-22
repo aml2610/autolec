@@ -1,6 +1,6 @@
 # Autolec
 
-This is an **Android** app developed during [WarwickHack2016](http://www.hack.warwick.tech/) by:
+This is an **Android** app developed during [Warwick Hack 2016](http://www.hack.warwick.tech/) by:
 * Alexandru Blinda
 * Alexandru Rosu
 * Tudor Suruceanu
@@ -27,7 +27,7 @@ This application is targeted to students and **automates** tedious operations. *
 * disables wifi
 * enables sounds
 * sets med-high brightness
-* 
+
 (The last 3 features of each list above can be configured by the student.)
 
 ## How it works
@@ -39,4 +39,13 @@ Furthermore, the phone's "environment" is adjusted as configured by the student 
 WILL BE UPDATED SOON
 
 ## <a name="database">The database</a>
-WILL BE UPDATED SOON
+It contains a list of the students enrolled to the courses, their student id and the time they last got in/out of a lecture. It also contains the list of the courses, among with their lecturers and the last lecture notes and surveys.
+
+ For now, the database is hardcoded as a test one hosted by Amazon Web Services, but in a future release it may be configurable.
+ 
+## The future ##
+* select database
+* show in/out times for particular courses
+* enroll students for particular courses
+* make changing the student id only possible when installing the app 
+* validating actions via a face recognition system
