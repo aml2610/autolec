@@ -7,8 +7,8 @@ This is an **Android** app developed during WarwickHack2016 by:
 * Andrei-Marius Longhin, all of them members of **Project ATAA** team
 
  This app brought **Project ATAA** two prizes at **WarwickHack2016**: 
-* **1st place** for the "Build a hack that helps students, using NFC tags or QR Codes" challenge by sponsor** Black Pepper Software**
-* **3rd place** overall for the whole hackathon, awarded by **Major League Hacking **
+* **1st place** for the "Build a hack that helps students, using NFC tags or QR Codes" challenge by sponsor **Black Pepper Software**
+* **3rd place** overall for the whole hackathon, awarded by **Major League Hacking**
 
 ## What it does
 
