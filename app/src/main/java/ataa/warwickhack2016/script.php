@@ -1,5 +1,5 @@
 <?php
-$con=mysqli_connect("db-uni.cntvjeyihz8y.us-west-2.rds.amazonaws.com", "ataa_admin", "ampulamare123");
+$con=mysqli_connect("placeholder", "placeholder", "placeholder");
 
 if (mysqli_connect_errno($con))
 {
