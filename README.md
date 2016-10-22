@@ -49,3 +49,4 @@ It contains a list of the students enrolled to the courses, their student id and
 * enroll students for particular courses
 * make changing the student id only possible when installing the app 
 * validating actions via a face recognition system
+* getting quizes as push notifications during lectures
